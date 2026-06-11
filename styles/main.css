@@ -48,8 +48,14 @@ nav a:hover {
     color: var(--primary);
 }
 
-.skip-link{
-    position: absolute;
+main{
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.skip-link{  
+    position: absolute; 
     top: -100px; 
 }
 
@@ -63,4 +69,10 @@ nav a:hover {
 
 .section.active {
     display: block;
+}
+
+@media (min-width: 768px) {
+    main {
+        padding: 2rem;
+    }
 }
