@@ -73,6 +73,82 @@ main{
     display: block;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+    max-width: 400px;
+}
+
+.form-group label{
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.form-group input, .form-group select{
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group input:focus, .form-group select:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.error-message {
+    color: var(--danger);
+    font-size: 0.875rem;
+    min-height: 1.25rem;
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.btn {
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+.btn-primary{
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover{
+    background: #1d4ed8;
+    transform: translateY(-2px);
+}
+
+.btn-primary:active{
+    background: #aab0c1;
+    transform: translateY(2px);
+}
+
+.btn-secondary:hover{
+    background: #bac4de;
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active{
+    background: #575a63;
+    transform: translateY(2px);
+}
+
+.btn-secondary{
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
 @media (min-width: 768px) {
     main {
         padding: 2rem;
