@@ -9,15 +9,20 @@
     <h1>Regex Validation Tests</h1>
 
     <script>
-        const Transaction = [
-            {id: "txn_0001",description: "Lunch at cafeteria",amount: 15.50},
-            {id: "txn_0002",description: "Bus pass",amount: 45.00},
-            {id: "txn_0003",description: "Coffee",amount: 8.75}
-        ]
+        const descriptionPattern = /^\S(?:.*\S)?$/;
+        const amountPattern = /^(0|[1-9]\d*)(\.\d{1,2}?$)/;
+        console.log(amountPattern.test("0"));
+        console.log(amountPattern.test("12"));
+        console.log(amountPattern.test("12.5"));
+        console.log(amountPattern.test("12.50"));
+        console.log(amountPattern.test("007"));
+        console.log(amountPattern.test("12.555"));
 
-        console.log(Transaction);
-        console.log(Transaction.length);
-        console.log(Transaction[0]);
+        const wrongPattern = /^[0-9]\d*$/;
+        console.log(wrongPattern.test("007"));   // what do you predict?
+
+        const correctPattern = /^(0|[1-9]\d*)$/;
+        console.log(correctPattern.test("007")); // what do you predict?
     </script>
 </body>
 </html>
