@@ -100,6 +100,9 @@ form.addEventListener("submit", function(event){
 
         renderTransactions(transactions);
         console.log("Saved successfully");
+
+        form.reset();
+        document.querySelector("#form-status").textContent = "Transaction saved Successfully"
     }
 });
 
