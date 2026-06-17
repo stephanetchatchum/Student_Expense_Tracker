@@ -22,4 +22,28 @@ form.addEventListener("submit", function(event){
     console.log("Amount Valid?", isAmountValid);
     console.log("Category Valid?", isCategoryValid);
     console.log("Date Valid?", isDateValid);
+
+    if (!isDescriptionValid) {
+        document.querySelector('#description-error').textContent = "Description cannot be empty or have leading/trailing spaces.";
+    } else {
+        document.querySelector('#description-error').textContent = "";
+    }
+
+    if (!isAmountValid) {
+        document.querySelector('#amount-error').textContent = "Amount cannot be empty or have leading/trailing spaces.";
+    } else {
+        document.querySelector('#amount-error').textContent = "";
+    }
+
+    if (!isCategoryValid) {
+        document.querySelector('#category-error').textContent = "Category can only contain letters, spaces, or hyphens (e.g. Food, Self-Care).";
+    } else {
+        document.querySelector('#category-error').textContent = "";
+    }
+
+    if (!isDateValid) {
+        document.querySelector('#date-error').textContent = "Please enter a valid date in YYYY-MM-DD format.";
+    } else {
+        document.querySelector('#date-error').textContent = "";
+    }
 });
