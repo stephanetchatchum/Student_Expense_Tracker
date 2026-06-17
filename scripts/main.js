@@ -4,6 +4,8 @@ const descriptionPattern = /^\S(?:.*\S)?$/;
 const amountPattern = /^(0|[1-9]\d*)(\.\d{1,2})?$/;        
 const datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const categoryPattern = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
+const duplicateWordPattern = /\b(\w+)\s+\1\b/i;
+
 
 form.addEventListener("submit", function(event){
     event.preventDefault();
@@ -18,6 +20,8 @@ form.addEventListener("submit", function(event){
     const isCategoryValid = categoryPattern.test(category);
     const isDateValid = datePattern.test(date);
 
+    const isDescriptionCorrect = duplicateWordPattern.test(description);
+
     console.log("Description Valid?", isDescriptionValid);
     console.log("Amount Valid?", isAmountValid);
     console.log("Category Valid?", isCategoryValid);
@@ -25,7 +29,10 @@ form.addEventListener("submit", function(event){
 
     if (!isDescriptionValid) {
         document.querySelector('#description-error').textContent = "Description cannot be empty or have leading/trailing spaces.";
-    } else {
+    } else if (isDescriptionCorrect){
+        document.querySelector('#description-error').textContent = "You repeated a word in the description";
+    }
+    else {
         document.querySelector('#description-error').textContent = "";
     }
 
