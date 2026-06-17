@@ -70,7 +70,24 @@ form.addEventListener("submit", function(event){
 
         transactions.push(newTransaction);
 
-        console.log(transactions);
+        function renderTransaction(list){
+            const tbody = document.querySelector("#record-tbody");
+
+            if (list.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No transactions yet. Add one to get started!</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = "";
+
+            list.forEach(function(transaction) {
+                const row = document.createElement("tr");
+
+                row.innerHTML = '<td>${transaction.description}</td><td>${transaction.amount.toFixed(2)}</td><td>${transaction.category}</td><td>${transaction.date}</td><td><button class="btn btn-secondary edit-btn" data-id="${transaction.id}">Edit</button><button class="btn btn-secondary delete-btn" data-id="${transaction.id}">Delete</button></td>'
+
+                tbody.appendChild(row);
+            });
+        }
     }
 });
 
