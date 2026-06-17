@@ -6,6 +6,7 @@ const datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const categoryPattern = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 const duplicateWordPattern = /\b(\w+)\s+\1\b/i;
 
+let transactions = [];
 
 form.addEventListener("submit", function(event){
     event.preventDefault();
@@ -52,6 +53,12 @@ form.addEventListener("submit", function(event){
         document.querySelector('#date-error').textContent = "Please enter a valid date in YYYY-MM-DD format.";
     } else {
         document.querySelector('#date-error').textContent = "";
+    }
+
+    const allValid = isDescriptionValid && isAmountValid && isCategoryValid && isDateValid;
+
+    if (allValid) {
+        console.log("All fields valid, ready to save!");
     }
 });
 
