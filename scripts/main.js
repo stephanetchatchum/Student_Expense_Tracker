@@ -6,7 +6,35 @@ const datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const categoryPattern = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 const duplicateWordPattern = /\b(\w+)\s+\1\b/i;
 
+
 let transactions = [];
+
+function renderTransactions(list){
+        const tbody = document.querySelector("#records-tbody");
+
+        if (list.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No transactions yet. Add one to get started!</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = "";
+
+        list.forEach(function(transaction) {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `<td>${transaction.description}</td>
+                <td>${transaction.amount.toFixed(2)}</td>
+                <td>${transaction.category}</td>
+                <td>${transaction.date}</td>
+                <td>
+                    <button class="btn btn-secondary edit-btn" data-id="${transaction.id}">Edit</button>
+                    <button class="btn btn-secondary delete-btn" data-id="${transaction.id}">Delete</button>
+                </td>
+            `;
+
+            tbody.appendChild(row);
+        });
+}
 
 form.addEventListener("submit", function(event){
     event.preventDefault();
@@ -70,24 +98,8 @@ form.addEventListener("submit", function(event){
 
         transactions.push(newTransaction);
 
-        function renderTransaction(list){
-            const tbody = document.querySelector("#record-tbody");
-
-            if (list.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5" class="empty-state">No transactions yet. Add one to get started!</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = "";
-
-            list.forEach(function(transaction) {
-                const row = document.createElement("tr");
-
-                row.innerHTML = '<td>${transaction.description}</td><td>${transaction.amount.toFixed(2)}</td><td>${transaction.category}</td><td>${transaction.date}</td><td><button class="btn btn-secondary edit-btn" data-id="${transaction.id}">Edit</button><button class="btn btn-secondary delete-btn" data-id="${transaction.id}">Delete</button></td>'
-
-                tbody.appendChild(row);
-            });
-        }
+        renderTransactions(transactions);
+        console.log("Saved successfully");
     }
 });
 
