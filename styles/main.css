@@ -291,4 +291,12 @@ tbody tr:hover {
     .stats-grid {
         grid-template-columns: repeat(3, 1fr);
     }
+
+    .form-group {
+        max-width: 1200px;
+    }
+
+    .transaction-form {
+        padding: 1rem;
+    }
 }
