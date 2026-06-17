@@ -47,3 +47,21 @@ form.addEventListener("submit", function(event){
         document.querySelector('#date-error').textContent = "";
     }
 });
+
+const navLinks = document.querySelectorAll("nav a");
+const sections = document.querySelectorAll(".section");
+
+navLinks.forEach(function(link){
+    link.addEventListener("click", function(event){
+        event.preventDefault();
+
+        const targetId = link.dataset.section;
+
+        sections.forEach(function(section){
+            section.classList.remove("active");
+        });
+
+        document.querySelector("#" + targetId).classList.add("active");
+    });
+
+});
