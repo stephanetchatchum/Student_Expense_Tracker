@@ -58,7 +58,19 @@ form.addEventListener("submit", function(event){
     const allValid = isDescriptionValid && isAmountValid && isCategoryValid && isDateValid;
 
     if (allValid) {
-        console.log("All fields valid, ready to save!");
+        const newTransaction = {
+            id: "txn_" + Date.now(),
+            description: description,
+            amount: parseFloat(amount),
+            category: category,
+            date: date,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        };
+
+        transactions.push(newTransaction);
+
+        console.log(transactions);
     }
 });
 
