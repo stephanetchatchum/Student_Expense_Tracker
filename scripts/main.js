@@ -36,6 +36,15 @@ function renderTransactions(list){
         });
 }
 
+const tbody = document.querySelector("#records-tbody");
+
+tbody.addEventListener("click", function(event){
+    if (event.target.classList.contains("delete-btn")) {
+        const id = event.target.dataset.id;
+        console.log("Delelte cliked for id:", id)
+    }
+});
+
 form.addEventListener("submit", function(event){
     event.preventDefault();
     
