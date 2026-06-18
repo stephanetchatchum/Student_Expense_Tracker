@@ -242,3 +242,13 @@ searchInput.addEventListener("input", function(){
 
     document.querySelector("#search-status").textContent = filtered.length + " result(s) found";
 });
+
+function loadTransactions(){
+    const stored = localStorage.getItem("transaction");
+    if (stored){
+        transactions = JSON.parse(stored);
+    }
+}
+
+loadTransactions();
+renderTransactions(transactions);
