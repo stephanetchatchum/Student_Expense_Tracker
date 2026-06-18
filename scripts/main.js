@@ -42,6 +42,36 @@ function saveTransaction() {
     localStorage.setItem("transaction", JSON.stringify(transactions));
 }
 
+function updatedDashboard() {
+    const total = transactions.reduce(function(sum, transaction) {
+        return sum + transaction.amount;
+    }, 0);
+
+    document.querySelector("#stat-total").textContent = total.toFixed(2) + " RWF";
+    document.querySelector("#stat-count").textContent = transactions.length;
+
+    const categoryCounts = {};
+
+    transactions.forEach(function(transaction) {
+        if (categoryCounts[transaction.category]) {
+            categoryCounts[transaction.category]++;
+        } else {
+            categoryCounts[transaction.category] = 1;
+        }
+    });
+
+    let topCategory = "-";
+    let maxCount = 0;
+
+    for (const category in categoryCounts) {
+        if (categoryCounts[category] > maxCount) {
+            maxCount = categoryCounts[category];
+            topCategory = category;
+        }
+}
+
+document.querySelector("#stat-top-category").textContent = topCategory;
+}
 
 const tbody = document.querySelector("#records-tbody");
 
@@ -57,6 +87,7 @@ tbody.addEventListener("click", function(event){
             });
 
             saveTransaction();
+            updatedDashboard();
 
             renderTransactions(transactions);
         }
@@ -145,6 +176,7 @@ form.addEventListener("submit", function(event){
             transactions.push(newTransaction);
 
             saveTransaction();
+            updatedDashboard();
 
             renderTransactions(transactions);
             console.log("Saved successfully");
@@ -165,6 +197,7 @@ form.addEventListener("submit", function(event){
             existingTransaction.updatedAt = new Date().toISOString();
 
             saveTransaction();
+            updatedDashboard();
 
             renderTransactions(transactions);
             console.log("Saved successfully");
@@ -310,6 +343,8 @@ function loadTransactions(){
 loadTransactions();
 renderTransactions(transactions);
 
+updatedDashboard();
+
 const saveSettingsBtn = document.querySelector("#save-settings-btn");
 
 saveSettingsBtn.addEventListener("click", function(){
@@ -323,4 +358,3 @@ saveSettingsBtn.addEventListener("click", function(){
 
     alert("Settings saved!");
 });
-
