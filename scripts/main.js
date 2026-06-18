@@ -209,6 +209,37 @@ exportBtn.addEventListener("click", function() {
     URL.revokeObjectURL(url);
 });
 
+const importInput = document.querySelector("#import-file");
+
+importInput.addEventListener("change", function() {
+    const file = importInput.files[0];
+
+    if (!file) {
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function() {
+        try {
+            const importedData = JSON.parse(reader.result);
+
+            if (Array.isArray(importedData)) {
+                transactions = importedData;
+                saveTransaction();
+                renderTransactions(transactions);
+                console.log("Import successful!");
+            } else {
+                alert("Invalid file format: expected an array of transactions.");
+            }
+        } catch (error) {
+            alert("Could not read file: invalid JSON.");
+        }
+    };
+
+    reader.readAsText(file);
+});
+
 const sortSelect = document.querySelector("#sort-select");
 
 sortSelect.addEventListener("change", function(){
