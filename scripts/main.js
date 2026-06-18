@@ -297,3 +297,17 @@ function loadTransactions(){
 
 loadTransactions();
 renderTransactions(transactions);
+
+const saveSettingsBtn = document.querySelector("#save-settings-btn");
+
+saveSettingsBtn.addEventListener("click", function(){
+    const settings = {
+        rateUsd: document.querySelector("#rate-usd").value,
+        rateXaf: document.querySelector("#rate-xaf").value,
+        budgetCap: document.querySelector("#budget-cap").value
+    };
+
+    localStorage.setItem("settings", JSON.stringify(settings));
+
+    alert("Settings saved!");
+});
