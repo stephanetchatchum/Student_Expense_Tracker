@@ -288,6 +288,18 @@ searchInput.addEventListener("input", function(){
     document.querySelector("#search-status").textContent = filtered.length + " result(s) found";
 });
 
+function loadSettings() {
+    const stared = localStorage.getItem("settings");
+    if (stared) {
+        const settings = JSON.parse(stared);
+        document.querySelector("#rate-usd").value = settings.rateUsd;
+        document.querySelector("#rate-xaf").value = settings.rateXaf;
+        document.querySelector("#budget-cap").value = settings.budgetCap;
+    }
+}
+
+loadSettings();
+
 function loadTransactions(){
     const stored = localStorage.getItem("transaction");
     if (stored){
@@ -311,3 +323,4 @@ saveSettingsBtn.addEventListener("click", function(){
 
     alert("Settings saved!");
 });
+
