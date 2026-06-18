@@ -60,7 +60,17 @@ tbody.addEventListener("click", function(event){
             return t.id === id;
         });
 
-        console.log("Editing:", transaction);
+        document.querySelector("#description").value = transaction.description;
+        document.querySelector("#amount").value = transaction.amount;
+        document.querySelector("#category").value = transaction.category;
+        document.querySelector("#date").value = transaction.date;
+        
+        editingID = id;
+
+        sections.forEach(function(section){
+            section.classList.remove("active");
+        });
+        document.querySelector("#add").classList.add("active");
     }
 });
 
@@ -113,24 +123,45 @@ form.addEventListener("submit", function(event){
 
     const allValid = isDescriptionValid && isAmountValid && isCategoryValid && isDateValid;
 
-    if (allValid) {
-        const newTransaction = {
-            id: "txn_" + Date.now(),
-            description: description,
-            amount: parseFloat(amount),
-            category: category,
-            date: date,
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString()
-        };
+    if (editingID === null){
+        if (allValid) {
+            const newTransaction = {
+                id: "txn_" + Date.now(),
+                description: description,
+                amount: parseFloat(amount),
+                category: category,
+                date: date,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
 
-        transactions.push(newTransaction);
+            transactions.push(newTransaction);
 
-        renderTransactions(transactions);
-        console.log("Saved successfully");
+            renderTransactions(transactions);
+            console.log("Saved successfully");
 
-        form.reset();
-        document.querySelector("#form-status").textContent = "Transaction saved Successfully"
+            form.reset();
+            document.querySelector("#form-status").textContent = "Transaction saved Successfully";
+        }
+    } else if (editingID != null){
+        if(allValid){
+            const existingTransaction = transactions.find(function(t) {
+                return t.id === editingID;
+            });
+            
+            existingTransaction.description = description;
+            existingTransaction.amount = parseFloat(amount);
+            existingTransaction.category = category;
+            existingTransaction.date = date;
+            existingTransaction.updatedAt = new Date().toISOString();
+
+            renderTransactions(transactions);
+            console.log("Saved successfully");
+
+            form.reset();
+            document.querySelector("#form-status").textContent = "Transaction Edited Successfully";
+            editingID = null;
+        }
     }
 });
 
