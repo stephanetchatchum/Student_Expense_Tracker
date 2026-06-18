@@ -9,6 +9,8 @@ const duplicateWordPattern = /\b(\w+)\s+\1\b/i;
 
 let transactions = [];
 
+let editingID = null;
+
 function renderTransactions(list){
         const tbody = document.querySelector("#records-tbody");
 
@@ -42,6 +44,23 @@ tbody.addEventListener("click", function(event){
     if (event.target.classList.contains("delete-btn")) {
         const id = event.target.dataset.id;
         console.log("Delelte cliked for id:", id)
+
+        const confirmed = confirm("Are you sure you want to delete this transaction?");
+        if (confirmed) {
+            transactions = transactions.filter(function(transaction){
+                return transaction.id !== id;
+            });
+
+            renderTransactions(transactions);
+        }
+    } else if (event.target.classList.contains("edit-btn")){
+        const id = event.target.dataset.id;
+
+        const transaction = transactions.find(function(t){
+            return t.id === id;
+        });
+
+        console.log("Editing:", transaction);
     }
 });
 
