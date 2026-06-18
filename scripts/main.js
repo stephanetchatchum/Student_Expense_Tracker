@@ -206,3 +206,28 @@ sortSelect.addEventListener("change", function(){
 
     renderTransactions(sorted);
 });
+
+const searchInput = document.querySelector("#search-input");
+
+searchInput.addEventListener("input", function(){
+    const query = searchInput.value;
+
+    let regex;
+    try {
+        regex = query ? new RegExp(query, "i") : null;
+    } catch (error) {
+        regex = null;
+    }
+
+    let filtered = transactions;
+
+    if (regex) {
+        filtered = transactions.filter(function(transaction){
+            return regex.test(transaction.description);
+        });
+    }
+
+    renderTransactions(filtered);
+
+    document.querySelector("#search-status").textContent = filtered.length + " result(s) found";
+});
