@@ -38,6 +38,11 @@ function renderTransactions(list){
         });
 }
 
+function saveTransaction() {
+    localStorage.setItem("transaction", JSON.stringify(transactions));
+}
+
+
 const tbody = document.querySelector("#records-tbody");
 
 tbody.addEventListener("click", function(event){
@@ -50,6 +55,8 @@ tbody.addEventListener("click", function(event){
             transactions = transactions.filter(function(transaction){
                 return transaction.id !== id;
             });
+
+            saveTransaction();
 
             renderTransactions(transactions);
         }
@@ -137,6 +144,8 @@ form.addEventListener("submit", function(event){
 
             transactions.push(newTransaction);
 
+            saveTransaction();
+
             renderTransactions(transactions);
             console.log("Saved successfully");
 
@@ -154,6 +163,8 @@ form.addEventListener("submit", function(event){
             existingTransaction.category = category;
             existingTransaction.date = date;
             existingTransaction.updatedAt = new Date().toISOString();
+
+            saveTransaction();
 
             renderTransactions(transactions);
             console.log("Saved successfully");
