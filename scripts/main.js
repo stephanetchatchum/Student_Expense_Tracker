@@ -194,6 +194,20 @@ navLinks.forEach(function(link){
 
 });
 
+const exportBtn = document.querySelector("#export-btn");
+
+exportBtn.addEventListener("click", function() {
+    const dataStr = JSON.stringify(transactions, null, 2);
+    const blob = new Blob([dataStr], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "transactions.json";
+    link.click();
+
+    URL.revokeObjectURL(url);
+});
 
 const sortSelect = document.querySelector("#sort-select");
 
