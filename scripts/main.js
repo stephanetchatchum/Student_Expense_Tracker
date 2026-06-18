@@ -148,7 +148,7 @@ form.addEventListener("submit", function(event){
             const existingTransaction = transactions.find(function(t) {
                 return t.id === editingID;
             });
-            
+
             existingTransaction.description = description;
             existingTransaction.amount = parseFloat(amount);
             existingTransaction.category = category;
@@ -181,4 +181,28 @@ navLinks.forEach(function(link){
         document.querySelector("#" + targetId).classList.add("active");
     });
 
+});
+
+
+const sortSelect = document.querySelector("#sort-select");
+
+sortSelect.addEventListener("change", function(){
+    const sortBy = sortSelect.value;
+    let sorted = [...transactions];
+
+    if (sortBy === "date-asc") {
+        sorted.sort(function(a,b){
+            return a.date.localeCompare(b.date);
+        });
+    } else if (sortBy === "description-asc"){
+        sorted.sort(function(a,b){
+            return a.description.localeCompare(b.description);
+        });
+    } else if (sortBy === "amount-asc"){
+        sorted.sort(function(a, b) {
+            return a.amount - b.amount;
+        });
+    }
+
+    renderTransactions(sorted);
 });
