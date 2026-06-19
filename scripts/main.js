@@ -1,5 +1,6 @@
 const form = document.querySelector("#transaction-form");
 
+let currentSearchRegex = null;
 const descriptionPattern = /^\S(?:.*\S)?$/;
 const amountPattern = /^(0|[1-9]\d*)(\.\d{1,2})?$/;        
 const datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
@@ -23,8 +24,12 @@ function renderTransactions(list){
 
         list.forEach(function(transaction) {
             const row = document.createElement("tr");
+            const highlightedDescription = currentSearchRegex 
+                ? transaction.description.replace(currentSearchRegex, match => `<mark>${match}</mark>`)
+                : transaction.description;
 
-            row.innerHTML = `<td>${transaction.description}</td>
+
+            row.innerHTML = `<td>${highlightedDescription}</td>
                 <td>${transaction.amount.toFixed(2)}</td>
                 <td>${transaction.category}</td>
                 <td>${transaction.date}</td>
@@ -68,9 +73,35 @@ function updatedDashboard() {
             maxCount = categoryCounts[category];
             topCategory = category;
         }
-}
+    }
 
-document.querySelector("#stat-top-category").textContent = topCategory;
+    document.querySelector("#stat-top-category").textContent = topCategory;
+
+
+    const storedSettings = localStorage.getItem("settings");
+    if (storedSettings) {
+        const settings = JSON.parse(storedSettings);
+        const budgetCap = parseFloat(settings.budgetCap);
+
+        if (budgetCap > 0) {
+            const percentage = Math.min((total / budgetCap) * 100, 100);
+            const remaining = budgetCap - total;
+            const budgetStatus = document.querySelector("#budget-status");
+            const budgetProgress = document.querySelector("#budget-progress");
+
+            budgetProgress.style.width = percentage + "%";
+
+            if (total > budgetCap) {
+                budgetProgress.style.background = "var(--danger)";
+                budgetStatus.setAttribute("aria-live", "assertive");
+                budgetStatus.textContent = "Over budget by " + Math.abs(remaining).toFixed(2) + " RWF!";
+            } else {
+                budgetProgress.style.background = "var(--primary)";
+                budgetStatus.setAttribute("aria-live", "polite");
+                budgetStatus.textContent = remaining.toFixed(2) + " RWF remaining of " + budgetCap.toFixed(2) + " RWF budget";
+            }
+        }
+    }
 }
 
 const tbody = document.querySelector("#records-tbody");
@@ -308,6 +339,7 @@ searchInput.addEventListener("input", function(){
         regex = null;
     }
 
+    currentSearchRegex = regex;
     let filtered = transactions;
 
     if (regex) {
@@ -355,6 +387,6 @@ saveSettingsBtn.addEventListener("click", function(){
     };
 
     localStorage.setItem("settings", JSON.stringify(settings));
-
+    updatedDashboard();
     alert("Settings saved!");
 });
