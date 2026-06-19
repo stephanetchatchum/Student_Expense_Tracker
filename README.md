@@ -7,7 +7,7 @@ A responsive, accessible single-page web app that helps students track daily exp
 🌐 https://stephanetchatchum.github.io/Student_Expense_Tracker/
 
 ## Demo Video
-🎥 https://youtu.be/jvh13eeg-Pk
+🎥 https://www.youtube.com/watch?v=dIOQiXGueao
 
 ## Repository
 📁 https://github.com/stephanetchatchum/Student_Expense_Tracker
