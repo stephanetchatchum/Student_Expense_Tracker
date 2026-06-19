@@ -5,14 +5,14 @@
 }
 
 :root {
-    --primary: #2563eb;
-    --danger: #dc2626;
-    --success: #16a34a;
-    --bg: #f8fafc;
+    --primary: #29524A;    
+    --danger: #dc2626;     
+    --success: #16a34a;    
+    --bg: #f5f3f0;        
     --surface: #ffffff;
-    --text: #1e293b;
-    --muted: #64748b;
-    --border: #e2e8f0;
+    --text: #06070E;      
+    --muted: #94A187;      
+    --border: #c2c9c2;       
 }
 
 body{
