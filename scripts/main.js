@@ -102,6 +102,35 @@ function updatedDashboard() {
             }
         }
     }
+
+    const chartBars = document.querySelector("#chart-bars");
+    chartBars.innerHTML = "";
+
+    const today = new Date();
+    let maxDayTotal = 0;
+    const dayTotals = [];
+
+    for (let i = 6; i >= 0; i--){
+        const day = new Date(today);
+        day.setDate(today.getDate() - i);
+        const dayString = day.toISOString().split("T")[0];
+
+        const dayTotal = transactions
+            .filter(function(t) { return t.date === dayString; })
+            .reduce(function(sum, t) { return sum + t.amount; }, 0);
+
+        dayTotals.push({ dayString, dayTotal });
+        if (dayTotal > maxDayTotal) maxDayTotal = dayTotal;
+    }
+
+    dayTotals.forEach(function(day) {
+        const bar = document.createElement("div");
+        bar.classList.add("chart-bar");
+        const heightPercent = maxDayTotal > 0 ? (day.dayTotal / maxDayTotal) * 100 : 0;
+        bar.style.height = heightPercent + "%";
+        bar.title = day.dayString + ": " + day.dayTotal.toFixed(2) + " RWF";
+        chartBars.appendChild(bar);
+    })
 }
 
 const tbody = document.querySelector("#records-tbody");
