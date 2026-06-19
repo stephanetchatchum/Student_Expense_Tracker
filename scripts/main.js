@@ -1,13 +1,11 @@
+const form = document.querySelector("#transaction-form");
+
+let currentSearchRegex = null;
 const descriptionPattern = /^\S(?:.*\S)?$/;
 const amountPattern = /^(0|[1-9]\d*)(\.\d{1,2})?$/;        
 const datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const categoryPattern = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
 const duplicateWordPattern = /\b(\w+)\s+\1\b/i;
-
-
-const form = document.querySelector("#transaction-form");
-
-let currentSearchRegex = null;
 
 
 let transactions = [];
@@ -164,7 +162,7 @@ tbody.addEventListener("click", function(event){
         document.querySelector("#amount").value = transaction.amount;
         document.querySelector("#category").value = transaction.category;
         document.querySelector("#date").value = transaction.date;
-        
+
         editingID = id;
 
         sections.forEach(function(section){
@@ -176,7 +174,7 @@ tbody.addEventListener("click", function(event){
 
 form.addEventListener("submit", function(event){
     event.preventDefault();
-    
+
     const description = document.querySelector('#description').value;
     const amount = document.querySelector('#amount').value;
     const category = document.querySelector('#category').value;
