@@ -9,10 +9,29 @@
     <h1>Regex Validation Tests</h1>
 
     <script>
-        const descriptionPattern = /^\S(?:.*\S)?$/;
-        const amountPattern = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
-        const datePattern = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
-        const categoryPattern = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
+        function assert(description, result) {
+            const p = document.createElement("p");
+            p.textContent = (result ? "✅ PASS" : "❌ FAIL") + " - " + description;
+            p.style.color = result ? "green" : "red";
+            document.body.appendChild(p);
+        }
+
+        const descPat = /^\S(?:.*\S)?$/;
+        const amtPat = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
+        const datePat = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
+        const catPat = /^[A-Za-z]+(?:[ -][A-Za-z]+)*$/;
+        const dupPat = /\b(\w+)\s+\1\b/i;
+
+        assert("Description: valid", descPat.test("Lunch at cafeteria"));
+        assert("Description: leading space fails", !descPat.test(" Lunch"));
+        assert("Amount: valid decimal", amtPat.test("12.50"));
+        assert("Amount: leading zero fails", !amtPat.test("007"));
+        assert("Date: valid", datePat.test("2026-06-19"));
+        assert("Date: invalid month fails", !datePat.test("2026-13-01"));
+        assert("Category: valid hyphenated", catPat.test("Self-Care"));
+        assert("Category: numbers fail", !catPat.test("Food123"));
+        assert("Duplicate word: caught", dupPat.test("coffee coffee"));
+        assert("Duplicate word: clean text passes", !dupPat.test("Lunch at cafeteria"));
     </script>
 </body>
 </html>
